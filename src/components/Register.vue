@@ -9,6 +9,9 @@
 </template>
 
 <script>
+import userService from '../services/user.service';
+
+
 export default {
     data : function () {
         return {
@@ -21,7 +24,10 @@ export default {
     },
     methods: {
         async callRegister() {
-            
+            await userService.register(this.user)
+            .then (() => {
+            this.$router.push('/movie');
+            });
         },
         
         

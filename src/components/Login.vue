@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import userService from '../services/user.service';
 
 export default {
     data: function () {
@@ -20,7 +21,9 @@ export default {
     },
     methods : {
         callLogin(){
-            
+            userService.login(this.user).then((res)=> {
+                this.$router.push('/movies');
+            })
         },
     }
 }
