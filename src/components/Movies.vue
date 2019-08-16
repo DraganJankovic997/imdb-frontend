@@ -5,7 +5,7 @@
 
         <div v-for="m in movies" :key="m.id">
 
-            <h3>{{ m.title }}</h3>
+            <router-link :to="'/movies/'+m.id" >{{ m.title }}</router-link>
             <h5>{{ m.genre_id }}</h5>
             <p>{{ trim(m.description) }} </p>
             <img :src="m.image_url" alt="Movie wallpaper">
