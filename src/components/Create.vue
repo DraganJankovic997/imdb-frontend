@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>Add manually: </h1>
         <p>Title: <input type="text" v-model="newMovie.title"></p>
         <p>Description: <textarea v-model="newMovie.description"
                 rows="4" cols="50"></textarea></p>
@@ -14,6 +15,11 @@
 
 
         <button @click="callAddMovie">Add</button>
+
+        <h1>Import from OMDB</h1>
+        <p>Search: <input type="text" v-model="omdbSearch"></p>
+        <button @click="callSearch()">Search</button>
+        
     </div>
 </template>
 
@@ -31,6 +37,7 @@ export default {
                 // created_at: '',
                 // updated_at: ''
             },
+            omdbSearch: ''
         }
     },
     created(){
@@ -40,7 +47,7 @@ export default {
         })
     },
     methods: {
-        ...mapActions('movies', ['genres', 'addMovie']),
+        ...mapActions('movies', ['genres', 'addMovie', 'search']),
 
         callAddMovie(){
             this.addMovie(this.newMovie)
@@ -51,6 +58,19 @@ export default {
             .catch((err) => {
                 console.log(err);
             })
+        },
+
+        callSearch(){
+            this.search(this.omdbSearch)
+            .then((res) => {
+                this.newMovie.title = res['data']['Title'];
+                this.newMovie.description = res['data']['Plot'];
+                this.newMovie.image_url = res['data']['Poster'];
+                this.newMovie.genre_id = 1;  //hotfix kasnije :^)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         }
     },
     computed: {

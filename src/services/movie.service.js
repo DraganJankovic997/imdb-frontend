@@ -1,7 +1,7 @@
 import axios from '../axios';
 
 const API = 'http://localhost:8000/api/';
-
+const API_KEY = '4f14d178';
 
 export default {
     getAll(){
@@ -18,5 +18,9 @@ export default {
     },
     genres(){
         return axios.get(API + 'genres');
+    },
+    search(search){
+        delete axios.defaults.headers.common["Authorization"];
+        return axios.get('http://www.omdbapi.com/?apikey=' + API_KEY + '&t=' + search);
     }
 }

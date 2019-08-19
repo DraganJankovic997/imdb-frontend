@@ -67,6 +67,15 @@ export default {
             .catch((err) => {
                 return err;
             });
+        },
+        search({commit}, title) {
+            return movieService.search(title)
+            .then((res) => {
+                return res;
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         }
 
     },
