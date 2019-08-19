@@ -76,6 +76,15 @@ export default {
             .catch((err) => {
                 console.log(err);
             });
+        },
+        viewMovie({}, id) {
+            return movieService.viewMovie(id)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
         }
 
     },

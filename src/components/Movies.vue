@@ -5,8 +5,9 @@
 
         <div v-for="m in getPage(currentPage)" :key="m.id">
 
-            <router-link :to="'/movies/'+m.id" >{{ m.title }}</router-link>
-            <h5>{{ m.genre.name }}</h5>
+            <router-link :to="'/movies/'+m.id" ><h1>{{ m.title }}</h1></router-link>
+            <h4>{{ m.genre.name }}</h4>
+            <p> Views: {{m.views}} </p>
             <p>{{ trim(m.description) }} </p>
             <img :src="m.image_url" alt="Movie wallpaper">
 

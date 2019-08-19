@@ -22,5 +22,8 @@ export default {
     search(search){
         delete axios.defaults.headers.common["Authorization"];
         return axios.get('http://www.omdbapi.com/?apikey=' + API_KEY + '&t=' + search);
+    },
+    viewMovie(id){
+        return axios.post(API + 'viewmoviepage/' + id);
     }
 }
