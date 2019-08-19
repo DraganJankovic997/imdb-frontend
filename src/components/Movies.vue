@@ -6,13 +6,14 @@
         <div v-for="m in getPage(currentPage)" :key="m.id">
 
             <router-link :to="'/movies/'+m.id" >{{ m.title }}</router-link>
-            <h5>{{ m.genre_id }}</h5>
+            <h5>{{ m.genre.name }}</h5>
             <p>{{ trim(m.description) }} </p>
             <img :src="m.image_url" alt="Movie wallpaper">
 
         </div>
 
-
+            <button @click="prevPage()">Previous page</button>
+            <b>{{ currentPage }}</b>
             <button @click="nextPage()">Next page</button>
 
    </div>
@@ -39,10 +40,9 @@ export default {
     methods: {
         ...mapActions('movies', ['getFirstPage', 'loadPage']),
         trim (text) {
-            var arr = text.trim();
-	        arr = arr.split(' ').slice(0, 20);
-            text = arr.join(' ') + '...';
-            return text;
+            return this.lodash.truncate(text, {
+                'length': 50,
+            });
         },
         nextPage(){
             this.currentPage = this.currentPage + 1;
@@ -52,6 +52,9 @@ export default {
             .catch((err) => {
                 console.log(err);
             })
+        },
+        prevPage(){
+            this.currentPage = this.currentPage - 1;
         }
 
     },
@@ -63,5 +66,8 @@ export default {
 </script>
 
 <style stored>
-    
+b {
+    margin-right: 20px;
+    margin-left: 20px;
+}
 </style>

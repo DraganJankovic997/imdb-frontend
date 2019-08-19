@@ -1,8 +1,20 @@
 <template>
   <div id="app">
-    <router-link to="/login">Login</router-link>
-    <router-link to="/register">Register</router-link>
-    <router-link to="/movies">Movies</router-link>
+    <ul>
+      <li>
+        <router-link to="/login">Login</router-link>
+      </li>
+      <li>
+        <router-link to="/register">Register</router-link>
+      </li>
+      <li>
+        <router-link to="/movies">Movies</router-link>
+      </li>
+      <li>
+        <router-link to="/create">Create</router-link>
+      </li>
+      <button @click="logout()"> Logout </button>
+    </ul>
 
 
     <router-view />
@@ -12,11 +24,19 @@
 </template>
 
 <script>
-
+import userService from './services/user.service';
+import { mapActions } from 'vuex';
 export default {
   name: 'app',
   components: {
     
+  },
+  methods : {
+    ...mapActions('users', ['logout']),
+    async callLogout(){
+      await this.logout();
+      this.$router.push('/login');
+    }
   }
 }
 </script>
@@ -29,5 +49,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+button {
+    height: 40px;
+    width: 100px;
 }
 </style>

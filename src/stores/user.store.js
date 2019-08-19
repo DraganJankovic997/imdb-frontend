@@ -15,6 +15,9 @@ export default {
         }
     },
     actions: {
+        logout() {
+            userService.logout();
+        }
     },
     getters: {
         
