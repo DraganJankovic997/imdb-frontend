@@ -8,8 +8,7 @@
 </template>
 
 <script>
-import movieService from '../services/movie.service';
-
+import { mapGetters } from 'vuex';
 export default {
     data () {
         return {
@@ -17,9 +16,10 @@ export default {
         }
     },
     created() {
-        movieService.getOne(this.$route.params.id).then((res) => {
-            this.movie = res['data'];
-        });
+        this.movie = {...this.getOne(this.$route.params.id)};
+    },
+    computed : {
+        ...mapGetters('movies', ['getOne']),
     }
 }
 </script>

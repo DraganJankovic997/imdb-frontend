@@ -9,5 +9,8 @@ export default {
     },
     getOne(id){
         return axios.get(API + '/' + id);
+    },
+    loadPage(page){
+        return axios.get(API+'?page='+page);
     }
 }

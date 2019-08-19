@@ -6,6 +6,7 @@ import VueAxios from 'vue-axios';
 import Vuex from 'vuex';
 import constants from './constants';
 import userService from './services/user.service';
+import store from './store';
 
 import Login from './components/Login';
 import Movies from './components/Movies';
@@ -53,5 +54,6 @@ router.beforeEach((to, from, next) => {
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

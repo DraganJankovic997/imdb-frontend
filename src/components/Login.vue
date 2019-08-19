@@ -21,9 +21,13 @@ export default {
     },
     methods : {
         callLogin(){
-            userService.login(this.user).then((res)=> {
+            userService.login(this.user)
+            .then((res)=> {
                 this.$router.push('/movies');
             })
+            .catch((err) => {
+                console.log(err.message);
+            });
         },
     }
 }
