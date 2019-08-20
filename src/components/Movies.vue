@@ -11,6 +11,11 @@
             <p>{{ trim(m.description) }} </p>
             <img :src="m.image_url" alt="Movie wallpaper">
 
+            <div v-for="r in getReacts(m.id)" v-bind:key="r.name">
+                <h3> {{r.name}}  =>  {{r.reaction_count}}  </h3>
+            </div>
+
+
         </div>
 
             <button @click="prevPage()">Previous page</button>
@@ -34,12 +39,15 @@ export default {
         this.currentPage = 1;
         this.loadPage(this.currentPage)
         .then((res)=> {
+            this.getPage(this.currentPage).forEach(element => {
+                this.loadReacts(element['id']);
+            });
         }, (err) => {
             console.log(err.message);
         });
     },
     methods: {
-        ...mapActions('movies', ['getFirstPage', 'loadPage']),
+        ...mapActions('movies', ['getFirstPage', 'loadPage', 'loadReacts']),
         trim (text) {
             return this.lodash.truncate(text, {
                 'length': 50,
@@ -49,6 +57,9 @@ export default {
             this.currentPage = this.currentPage + 1;
             this.loadPage(this.currentPage)
             .then(()=> {
+                this.getPage(this.currentPage).forEach(element => {
+                    this.loadReacts(element['id']);
+                });
             })
             .catch((err) => {
                 console.log(err);
@@ -60,7 +71,7 @@ export default {
 
     },
     computed: {
-        ...mapGetters('movies', ['getPage', 'getAll']),
+        ...mapGetters('movies', ['getPage', 'getAll', 'getReacts']),
         
     }
 }

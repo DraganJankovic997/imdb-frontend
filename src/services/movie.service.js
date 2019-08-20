@@ -25,5 +25,8 @@ export default {
     },
     viewMovie(id){
         return axios.post(API + 'viewmoviepage/' + id);
+    },
+    loadReacts(id){
+        return axios.get(API + 'react/' + id);
     }
 }

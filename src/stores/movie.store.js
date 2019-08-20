@@ -6,7 +6,8 @@ export default {
     state: {
         movies: [],
         oneMovie: null,
-        genres: []
+        genres: [],
+        reacts: [],
     },
     mutations: {
         SETMOVIES(state, movies) {
@@ -28,6 +29,9 @@ export default {
              } else {
                  state.movies.push([state.movies.length, [newMovie]]);
              }
+        },
+        ADDREACTS(state, newReacts){
+            state.reacts.push(newReacts);
         }
     },
     actions: {
@@ -78,9 +82,13 @@ export default {
             });
         },
         viewMovie({}, id) {
-            return movieService.viewMovie(id)
+            return movieService.viewMovie(id);
+        },
+        loadReacts({commit}, id){
+            movieService.loadReacts(id)
             .then((res) => {
-                console.log(res);
+                console.log(res['data']);
+                commit('ADDREACTS', res['data']);
             })
             .catch((err) => {
                 console.log(err);
@@ -99,5 +107,12 @@ export default {
             return movie;
         },
         getGenres : (state) => state.genres,
+        getReacts: (state) => (id) => {
+            return state.reacts.find((r) => {
+                if(!!r[0]) {
+                    return r[0].movie_id === id;
+                }
+            })
+        }
     }
 }

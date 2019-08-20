@@ -6,6 +6,9 @@
         <p>Views: {{getOne.views}}</p>
         <p>{{ getOne.description }}</p>
         <img :src="getOne.image_url" alt="Movie cover wallpaper">
+        <div v-for="r in getReacts(getOne.id)" v-bind:key="r.name">
+            <h3> {{r.name}}  =>  {{r.reaction_count}}  </h3>
+        </div>
     </div>
 </template>
 
@@ -15,12 +18,13 @@ export default {
     created() {
         this.getDetails(this.$route.params.id);
         this.viewMovie(this.$route.params.id);
+        this.loadReacts(this.$route.params.id);
     },
     computed : {
-        ...mapGetters('movies', ['getOne']),
+        ...mapGetters('movies', ['getOne', 'getReacts']),
     },
     methods : {
-        ...mapActions('movies', ['getDetails', 'viewMovie'])
+        ...mapActions('movies', ['getDetails', 'viewMovie', 'loadReacts'])
     }
 }
 </script>
