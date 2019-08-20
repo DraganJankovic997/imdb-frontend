@@ -58,16 +58,18 @@ export default {
             });
         },
         nextPage(){
+            this.go = false;
             this.currentPage = this.currentPage + 1;
             this.loadPage(this.currentPage)
             .then(()=> {
                 this.getPage(this.currentPage).forEach(element => {
                     this.loadReacts(element['id']);
                 });
+                this.go = true;
             })
             .catch((err) => {
                 console.log(err);
-            })
+            });
         },
         prevPage(){
             this.currentPage = this.currentPage - 1;
