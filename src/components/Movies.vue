@@ -3,6 +3,14 @@
         
         <h1>Movies: </h1>
         <h1>Search: <input type="text" v-model="search"></h1>
+        <h1>Genre: 
+            <select v-model="displayGenre">
+                <option value="0">All genres</option>
+                <option v-for="g in getGenres" :key="g.id" 
+                v-bind:value="g.id">{{ g.name }}</option>
+            </select>
+        </h1>
+        <br><br><br>
         <div v-for="m in filteredMovies" :key="m.id">
 
             <router-link :to="'/movies/'+m.id" ><h1>{{ m.title }}</h1></router-link>
@@ -35,7 +43,9 @@ export default {
         return {
             currentPage: null,
             search: '',
-            go: false
+            go: false,
+            displayGenre: '',
+            genreFilter: false,
         }
     },
     created () {
@@ -45,13 +55,14 @@ export default {
             this.getPage(this.currentPage).forEach(element => {
                 this.loadReacts(element['id']);
             });
+            this.genres();
             this.go = true;
         }, (err) => {
             console.log(err.message);
         });
     },
     methods: {
-        ...mapActions('movies', ['getFirstPage', 'loadPage', 'loadReacts']),
+        ...mapActions('movies', ['getFirstPage', 'loadPage', 'loadReacts', 'genres']),
         trim (text) {
             return this.lodash.truncate(text, {
                 'length': 50,
@@ -73,15 +84,19 @@ export default {
         },
         prevPage(){
             this.currentPage = this.currentPage - 1;
-        }
+        },
 
     },
     computed: {
-        ...mapGetters('movies', ['getPage', 'getAll', 'getReacts']),
+        ...mapGetters('movies', ['getPage', 'getAll', 'getReacts', 'getGenres']),
         filteredMovies: function () {
             if(this.go) {
                 return this.getPage(this.currentPage).filter((movie) => {
-                    return movie.title.toLowerCase().match(this.search.toLowerCase());
+                    if(this.displayGenre == 0 || movie.genre_id == this.displayGenre){
+                        return movie.title.toLowerCase().match(this.search.toLowerCase());
+                    } else {
+                        return false;
+                    }
                 });
             } else {
                 return this.getPage(this.currentPage);
