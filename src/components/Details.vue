@@ -6,15 +6,26 @@
         <p>Views: {{getOne.views}}</p>
         <p>{{ getOne.description }}</p>
         <img :src="getOne.image_url" alt="Movie cover wallpaper">
-        <div v-for="r in getReacts(getOne.id)" v-bind:key="r.name">
-            <h3> {{r.name}}  =>  {{r.reaction_count}}  </h3>
+        
+        <div v-if="getReacts(getOne.id) != null" >
+            <p>Likes : {{getReacts(getOne.id)['emotes'][0]}}</p>
         </div>
+        <button @click="react(getOne.id, 1)">Like !</button>
+        <div v-if="getReacts(getOne.id) != null" >
+            <p>Disikes : {{getReacts(getOne.id)['emotes'][1]}}</p>
+        </div>
+        <button @click="react(getOne.id, 2)">Disike !</button>
+
+
+
+
     </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 export default {
+
     created() {
         this.getDetails(this.$route.params.id);
         this.viewMovie(this.$route.params.id);
@@ -24,7 +35,13 @@ export default {
         ...mapGetters('movies', ['getOne', 'getReacts']),
     },
     methods : {
-        ...mapActions('movies', ['getDetails', 'viewMovie', 'loadReacts'])
+        ...mapActions('movies', ['getDetails', 'viewMovie', 'loadReacts', 'addReaction']),
+        react(movie_id, emote_id){
+        this.addReaction({
+            "movie_id": movie_id,
+            "emote_id": emote_id
+        });
+        }
     }
 }
 </script>

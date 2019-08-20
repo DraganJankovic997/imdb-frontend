@@ -28,5 +28,8 @@ export default {
     },
     loadReacts(id){
         return axios.get(API + 'react/' + id);
+    },
+    addReaction(data) {
+        return axios.post(API + 'react', data);
     }
 }

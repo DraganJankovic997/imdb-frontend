@@ -87,12 +87,20 @@ export default {
         loadReacts({commit}, id){
             movieService.loadReacts(id)
             .then((res) => {
-                console.log(res['data']);
                 commit('ADDREACTS', res['data']);
             })
             .catch((err) => {
                 console.log(err);
             })
+        },
+        addReaction({}, payload){
+            return movieService.addReaction(payload)
+            .then((res)=>{
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         }
 
     },
@@ -109,9 +117,7 @@ export default {
         getGenres : (state) => state.genres,
         getReacts: (state) => (id) => {
             return state.reacts.find((r) => {
-                if(!!r[0]) {
-                    return r[0].movie_id === id;
-                }
+                return r['movie_id'] == id;
             })
         }
     }
