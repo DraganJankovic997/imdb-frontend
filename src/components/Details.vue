@@ -18,7 +18,7 @@
 
 
 
-
+        <app-comments></app-comments>
     </div>
 </template>
 

@@ -27,9 +27,9 @@
 
         </div>
 
-            <button @click="prevPage()">Previous page</button>
+            <button v-if="currentPage > 1" @click="prevPage()">Previous page</button>
             <b>{{ currentPage }}</b>
-            <button @click="nextPage()">Next page</button>
+            <button v-if="currentPage < getLastPage" @click="nextPage()">Next page</button>
 
    </div>
 </template>
@@ -41,7 +41,7 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
     data () {
         return {
-            currentPage: null,
+            currentPage: 0,
             search: '',
             go: false,
             displayGenre: '',
@@ -84,11 +84,11 @@ export default {
         },
         prevPage(){
             this.currentPage = this.currentPage - 1;
-        },
+        }
 
     },
     computed: {
-        ...mapGetters('movies', ['getPage', 'getAll', 'getReacts', 'getGenres']),
+        ...mapGetters('movies', ['getPage', 'getAll', 'getReacts', 'getGenres', 'getLastPage']),
         filteredMovies: function () {
             if(this.go) {
                 return this.getPage(this.currentPage).filter((movie) => {
@@ -97,7 +97,7 @@ export default {
                     } else {
                         return false;
                     }
-                });
+                });                
             } else {
                 return this.getPage(this.currentPage);
             }

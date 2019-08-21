@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import userService from '../services/user.service';
+import { mapActions } from 'vuex';
 
 
 export default {
@@ -25,10 +25,11 @@ export default {
         }
     },
     methods: {
-        async callRegister() {
-            await userService.register(this.user)
+        ...mapActions('users', ['register']),
+        callRegister() {
+            this.register(this.user)
             .then (() => {
-            this.$router.push('/movie');
+            this.$router.push('/login');
             });
         },
         
