@@ -14,6 +14,7 @@
         <div v-for="m in filteredMovies" :key="m.id">
 
             <router-link :to="'/movies/'+m.id" ><h1>{{ m.title }}</h1></router-link>
+            <div v-if="getWatched(m.id) != null">Watched: {{ getWatched(m.id)['watched'] }}</div>
             <h4>{{ m.genre.name }}</h4>
             <p> Views: {{m.views}} </p>
             <p>{{ trim(m.description) }} </p>
@@ -54,6 +55,13 @@ export default {
         .then((res)=> {
             this.getPage(this.currentPage).forEach(element => {
                 this.loadReacts(element['id']);
+                this.isWatched(element['id'])
+                .then((res)=> {
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
             });
             this.genres();
             this.go = true;
@@ -63,6 +71,7 @@ export default {
     },
     methods: {
         ...mapActions('movies', ['getFirstPage', 'loadPage', 'loadReacts', 'genres']),
+        ...mapActions('utils', ['isWatched']),
         trim (text) {
             return this.lodash.truncate(text, {
                 'length': 50,
@@ -75,6 +84,13 @@ export default {
             .then(()=> {
                 this.getPage(this.currentPage).forEach(element => {
                     this.loadReacts(element['id']);
+                    this.isWatched(element['id'])
+                    .then((res)=> {
+                        console.log(res);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
                 });
                 this.go = true;
             })
@@ -89,6 +105,7 @@ export default {
     },
     computed: {
         ...mapGetters('movies', ['getPage', 'getAll', 'getReacts', 'getGenres', 'getLastPage']),
+        ...mapGetters('utils', ['getWatched']),
         filteredMovies: function () {
             if(this.go) {
                 return this.getPage(this.currentPage).filter((movie) => {

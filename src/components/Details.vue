@@ -1,6 +1,8 @@
 <template>
     <div v-if="getOne != null">
-        <h1> Details: </h1>
+        <h1> Details: </h1>  
+        <div v-if="getWatched(getOne.id) != null">Watched: {{ getWatched(getOne.id)['watched'] }}</div>
+        <button @click="callSetWatched">Watch/unwatch me !</button>
         <h1> Title: {{ getOne.title }}</h1>
         <h3> Genre: {{ getOne.genre.name }}</h3>
         <p>Views: {{getOne.views}}</p>
@@ -18,7 +20,7 @@
 
 
 
-        <app-comments></app-comments>
+        <app-comments/>
     </div>
 </template>
 
@@ -30,17 +32,28 @@ export default {
         this.getDetails(this.$route.params.id);
         this.viewMovie(this.$route.params.id);
         this.loadReacts(this.$route.params.id);
+        this.isWatched(this.$route.params.id);
     },
     computed : {
         ...mapGetters('movies', ['getOne', 'getReacts']),
+        ...mapGetters('utils', ['getWatched'])
     },
     methods : {
         ...mapActions('movies', ['getDetails', 'viewMovie', 'loadReacts', 'addReaction']),
+        ...mapActions('utils', ['isWatched', 'setWatched']),
         react(movie_id, emote_id){
-        this.addReaction({
-            "movie_id": movie_id,
-            "emote_id": emote_id
-        });
+            this.addReaction({
+                "movie_id": movie_id,
+                "emote_id": emote_id
+            });
+        },
+        callSetWatched(){
+            this.setWatched(this.$route.params.id)
+            .then((res) => {
+            })
+            .catch((err) => {
+                console.log(err)
+            });
         }
     }
 }
