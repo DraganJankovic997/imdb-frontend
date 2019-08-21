@@ -13,10 +13,10 @@ export default {
     },
     getWatchedPage(page) {
         return axios.get(API + 'watchedPage/' + page);
-    }
-    // getPopular() {
-
-    // },
+    },
+    getPopular() {
+        return axios.get(API + 'popular');
+    },
     // getRelated(genre_id) {
 
     // }
