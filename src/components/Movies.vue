@@ -53,25 +53,18 @@ export default {
         this.currentPage = 1;
         this.loadPage(this.currentPage)
         .then((res)=> {
-            this.getPage(this.currentPage).forEach(element => {
-                this.loadReacts(element['id']);
-                this.isWatched(element['id'])
-                .then((res)=> {
-                    console.log(res);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-            });
+            this.loadReactsPage(this.currentPage);
             this.genres();
             this.go = true;
+            this.getWatchedPage(this.currentPage);
+
         }, (err) => {
             console.log(err.message);
         });
     },
     methods: {
-        ...mapActions('movies', ['getFirstPage', 'loadPage', 'loadReacts', 'genres']),
-        ...mapActions('utils', ['isWatched']),
+        ...mapActions('movies', ['getFirstPage', 'loadPage', 'loadReactsPage', 'genres']),
+        ...mapActions('utils', ['getWatchedPage']),
         trim (text) {
             return this.lodash.truncate(text, {
                 'length': 50,
@@ -82,17 +75,10 @@ export default {
             this.currentPage = this.currentPage + 1;
             this.loadPage(this.currentPage)
             .then(()=> {
-                this.getPage(this.currentPage).forEach(element => {
-                    this.loadReacts(element['id']);
-                    this.isWatched(element['id'])
-                    .then((res)=> {
-                        console.log(res);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-                });
+                this.loadReactsPage(this.currentPage);
                 this.go = true;
+                this.getWatchedPage(this.currentPage);
+
             })
             .catch((err) => {
                 console.log(err);

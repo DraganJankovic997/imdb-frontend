@@ -31,5 +31,8 @@ export default {
     },
     addReaction(data) {
         return axios.post(API + 'react', data);
+    },
+    loadReactsPage(page) {
+        return axios.get(API + 'reactPage/' + page);
     }
 }

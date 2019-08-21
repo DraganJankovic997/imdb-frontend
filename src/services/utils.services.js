@@ -11,6 +11,9 @@ export default {
     setWatched(id) {
         return axios.post(API + 'watched/' + id);
     },
+    getWatchedPage(page) {
+        return axios.get(API + 'watchedPage/' + page);
+    }
     // getPopular() {
 
     // },

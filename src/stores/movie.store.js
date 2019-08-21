@@ -34,6 +34,9 @@ export default {
         ADDREACTS(state, newReacts){
             state.reacts.push(newReacts);
         },
+        ADDREACTSPAGE(state, newReactsPage){
+            state.reacts = state.reacts.concat(newReactsPage);
+        },
         SETLASTPAGE(state, page){
             state.lastPage = page;
         }
@@ -96,6 +99,15 @@ export default {
             })
             .catch((err) => {
                 console.log(err);
+            })
+        },
+        loadReactsPage({commit}, page) {
+            return movieService.loadReactsPage(page)
+            .then((res) =>{
+                commit('ADDREACTSPAGE', res['data']);
+            })
+            .catch((err) => {
+                return err;
             })
         },
         addReaction({}, payload){

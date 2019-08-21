@@ -43,6 +43,16 @@ export default {
             .catch((err) => {
                 return err;
             });
+        },
+        getWatchedPage({commit}, page) {
+            return utilsService.getWatchedPage(page)
+            .then((res) => {
+                commit('ADDWATCHED', res['data']);
+                return res;
+            })
+            .catch((err) => {
+                return err;
+            });
         }
     },
     getters: {
