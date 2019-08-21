@@ -4,7 +4,7 @@ export default {
     namespaced: true,
     state: {
         watched: [],
-        popular: []
+        listOfTen: []
     },
     mutations: {
         ADDWATCHED(store, payload) {
@@ -18,8 +18,8 @@ export default {
             );
             store.watched[i]['watched'] = !store.watched[i]['watched'];
         },
-        ADDPOPULAR(state, data) {
-            state.popular = data;
+        ADDLISTOFTEN(state, data) {
+            state.listOfTen = data;
         }
     },
     actions: {
@@ -60,11 +60,20 @@ export default {
         loadPopular({commit}){
             return utilsService.getPopular()
             .then((res) => {
-                commit('ADDPOPULAR', res['data']);
+                commit('ADDLISTOFTEN', res['data']);
             })
             .catch((err) => {
                 console.log(err);
             })
+        },
+        loadRelated({commit}, genre_id){
+            return utilsService.getRelated(genre_id)
+            .then((res) => {
+                commit('ADDLISTOFTEN', res['data']);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         }
     },
     getters: {
@@ -73,6 +82,6 @@ export default {
                 return w['movie_id'] == id;
             })
         },
-        getPopular: (state) => state.popular,
+        getListOfTen: (state) => state.listOfTen,
     }
 }

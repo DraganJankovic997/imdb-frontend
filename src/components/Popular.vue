@@ -1,8 +1,7 @@
 <template>
     <div>
-        <h1>Popular: </h1>
-        <div v-for="p in getPopular" v-bind:key="p.id">
-            <p> {{ p.title }} , {{p.views}}   <button @click="redirect(p.id)" >Go to !</button> </p>
+        <div v-for="p in getListOfTen" v-bind:key="p.id">
+            <p @click="redirect(p.id)"> {{ p.title }}, {{p.views}} </p>
         </div>
         
     </div>
@@ -11,19 +10,25 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 export default {
-    
+    props: ['genre'],
     created(){
-        this.loadPopular();
+        console.log(this.genre);
+        if(this.genre_id == 0) {
+            this.loadPopular();
+        }
+        else {
+            this.loadRelated(this.genre);
+        }
     },
     methods: {
-        ...mapActions('utils', ['loadPopular']),
+        ...mapActions('utils', ['loadPopular', 'loadRelated']),
 
         redirect($id){
             this.$router.push('/movies/' + $id);
         }
     },
     computed: {
-        ...mapGetters('utils', ['getPopular'])
+        ...mapGetters('utils', ['getListOfTen'])
     }
 }
 </script>

@@ -1,26 +1,32 @@
 <template>
-    <div v-if="getOne != null">
-        <h1> Details: </h1>  
-        <div v-if="getWatched(getOne.id) != null">Watched: {{ getWatched(getOne.id)['watched'] }}</div>
-        <button @click="callSetWatched">Watch/unwatch me !</button>
-        <h1> Title: {{ getOne.title }}</h1>
-        <h3> Genre: {{ getOne.genre.name }}</h3>
-        <p>Views: {{getOne.views}}</p>
-        <p>{{ getOne.description }}</p>
-        <img :src="getOne.image_url" alt="Movie cover wallpaper">
-        
-        <div v-if="getReacts(getOne.id) != null" >
-            <p>Likes : {{getReacts(getOne.id)['emotes'][0]}}</p>
+    <div v-if="getOne != null" >
+        <div class="col1">
+            <h1> Details: </h1>  
+            <div v-if="getWatched(getOne.id) != null">Watched: {{ getWatched(getOne.id)['watched'] }}</div>
+            <button @click="callSetWatched">Watch/unwatch me !</button>
+            <h1> Title: {{ getOne.title }}</h1>
+            <h3> Genre: {{ getOne.genre.name }}</h3>
+            <p>Views: {{getOne.views}}</p>
+            <p>{{ getOne.description }}</p>
+            <img :src="getOne.image_url" alt="Movie cover wallpaper">
+            
+            <div v-if="getReacts(getOne.id) != null" >
+                <p>Likes : {{getReacts(getOne.id)['emotes'][0]}}</p>
+            </div>
+            <button @click="react(getOne.id, 1)">Like !</button>
+            <div v-if="getReacts(getOne.id) != null" >
+                <p>Disikes : {{getReacts(getOne.id)['emotes'][1]}}</p>
+            </div>
+            <button @click="react(getOne.id, 2)">Disike !</button>
+
+
+
+            <app-comments/>
         </div>
-        <button @click="react(getOne.id, 1)">Like !</button>
-        <div v-if="getReacts(getOne.id) != null" >
-            <p>Disikes : {{getReacts(getOne.id)['emotes'][1]}}</p>
+        <div class="col2">
+            <h1>Related: </h1>
+            <app-popular :genre="getOne.genre_id" />
         </div>
-        <button @click="react(getOne.id, 2)">Disike !</button>
-
-
-
-        <app-comments/>
     </div>
 </template>
 
@@ -60,5 +66,12 @@ export default {
 </script>
 
 <style stored>
-    
+    .col1 {
+        float: left;
+        width: 70%;
+    }
+    .col2 {
+        float: right;
+        width: 30%;
+    }
 </style>

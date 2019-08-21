@@ -35,7 +35,8 @@
 
 
         <div class="col2">
-            <app-popular></app-popular>
+            <h1>Popular: </h1>
+            <app-popular :genre_id="0" />
         </div>
 
    </div>
@@ -117,17 +118,17 @@ export default {
 </script>
 
 <style stored>
-b {
-    margin-right: 20px;
-    margin-left: 20px;
-}
+    b {
+        margin-right: 20px;
+        margin-left: 20px;
+    }
 
-.col1 {
-  float: left;
-  width: 70%;
-}
-.col2 {
-    float: right;
-    width: 30%;
-}
+    .col1 {
+        float: left;
+        width: 70%;
+    }
+    .col2 {
+        float: right;
+        width: 30%;
+    }
 </style>

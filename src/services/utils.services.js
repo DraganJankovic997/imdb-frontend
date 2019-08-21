@@ -17,8 +17,8 @@ export default {
     getPopular() {
         return axios.get(API + 'popular');
     },
-    // getRelated(genre_id) {
-
-    // }
+    getRelated(genre_id) {
+        return axios.get(API+'related/' + genre_id);
+    }
     
 };
