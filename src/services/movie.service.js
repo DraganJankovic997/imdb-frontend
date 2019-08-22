@@ -1,7 +1,7 @@
 import axios from '../axios';
 
 const API = 'http://localhost:8000/api/';
-const API_KEY = '4f14d178';
+
 
 export default {
     getAll(){
@@ -22,9 +22,6 @@ export default {
     search(search){
         delete axios.defaults.headers.common["Authorization"];
         return axios.get('http://www.omdbapi.com/?apikey=' + API_KEY + '&t=' + search);
-    },
-    viewMovie(id){
-        return axios.post(API + 'viewmoviepage/' + id);
     },
     loadReacts(id){
         return axios.get(API + 'react/' + id);

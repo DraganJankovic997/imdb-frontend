@@ -33,9 +33,9 @@ export default {
   },
   methods : {
     ...mapActions('users', ['logout']),
-    async callLogout(){
-      await this.logout();
-      this.$router.push('/login');
+    callLogout(){
+      this.logout();
+      this.$router.push('/movies');
     }
   }
 }

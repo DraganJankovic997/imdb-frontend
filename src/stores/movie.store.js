@@ -89,9 +89,6 @@ export default {
                 console.log(err);
             });
         },
-        viewMovie({}, id) {
-            return movieService.viewMovie(id);
-        },
         loadReacts({commit}, id){
             movieService.loadReacts(id)
             .then((res) => {
@@ -133,9 +130,7 @@ export default {
         },
         getGenres : (state) => state.genres,
         getReacts: (state) => (id) => {
-            return state.reacts.find((r) => {
-                return r['movie_id'] == id;
-            })
+            return find(state.reacts, ['movie_id', id])
         },
         getLastPage: (state) => state.lastPage,
     }

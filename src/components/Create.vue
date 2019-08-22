@@ -66,7 +66,7 @@ export default {
                 this.newMovie.title = res['data']['Title'];
                 this.newMovie.description = res['data']['Plot'];
                 this.newMovie.image_url = res['data']['Poster'];
-                this.newMovie.genre_id = 1;  //hotfix kasnije :^)
+                this.newMovie.genre_id = 1; 
             })
             .catch((err) => {
                 console.log(err);

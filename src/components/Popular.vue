@@ -12,8 +12,7 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     props: ['genre'],
     created(){
-        console.log(this.genre);
-        if(this.genre_id == 0) {
+        if(this.genre == 0) {
             this.loadPopular();
         }
         else {
@@ -25,6 +24,7 @@ export default {
 
         redirect($id){
             this.$router.push('/movies/' + $id);
+            location.reload();
         }
     },
     computed: {

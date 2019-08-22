@@ -21,7 +21,6 @@ export default {
         login({}, user){
             return userService.login(user)
             .then((res) => {
-                localStorage.setItem('token', res['data']['access_token']);
                 return res;
             })
             .catch((err) => {

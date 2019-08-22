@@ -1,5 +1,4 @@
 import axios from '../axios';
-import constants from '../constants';
 
 const API = 'http://localhost:8000/api/';
 

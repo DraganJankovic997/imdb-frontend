@@ -44,7 +44,7 @@ export default {
                 return res;
             })
             .catch((err) => {
-                return err;
+                console.log(err);
             });
         },
         getWatchedPage({commit}, page) {
