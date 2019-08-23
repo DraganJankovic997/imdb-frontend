@@ -13,7 +13,7 @@
       <li>
         <router-link to="/create">Create</router-link>
       </li>
-      <button @click="logout()"> Logout </button>
+      <button @click="callLogout()"> Logout </button>
     </ul>
 
 
@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import userService from './services/user.service';
 import { mapActions } from 'vuex';
 export default {
   name: 'app',
@@ -37,7 +36,6 @@ export default {
       try{
         await this.logout()
         .then(() => {
-          console.log('huehue');
           this.$router.push('/login');
         });
       } catch(ex) {

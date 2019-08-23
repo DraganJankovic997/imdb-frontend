@@ -15,8 +15,8 @@ export default {
         }
     },
     actions: {
-        async logout() {
-            await userService.logout();
+        logout() {
+            localStorage.removeItem('token');
         },
         login({}, user){
             return userService.login(user)

@@ -27,7 +27,7 @@ export default {
         return localStorage.getItem('token');
     },
     logout(){
-        localStorage.removeItem('token');
+        
     }
     
 };
