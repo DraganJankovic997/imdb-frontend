@@ -16,9 +16,10 @@ import Details from './components/Details';
 import Create from './components/Create';
 import Comments from './components/Comments';
 import Popular from './components/Popular';
-
+import Reacts from './components/Reacts';
 Vue.component('app-comments', Comments);
-Vue.component('app-popular', Popular)
+Vue.component('app-popular', Popular);
+Vue.component('app-reacts', Reacts);
 
 
 Vue.use(Vuex);

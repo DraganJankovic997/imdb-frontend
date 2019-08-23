@@ -20,10 +20,9 @@
                 <p>{{ trim(m.description) }} </p>
                 <img :src="m.image_url" alt="Movie wallpaper">
 
-                <div v-if="getReacts(m.id) != null" >
-                    <p>Likes : {{m.emotesCount.Like}}</p>
-                    <p>Disikes : {{m.emotesCount.Dislike}}</p>
-                </div>
+                <app-reacts :pbuttons="false"
+                    :pemotesCount="m.emotesCount"
+                    :pid="m.id" />
 
 
             </div>
@@ -51,7 +50,6 @@ export default {
         return {
             currentPage: 0,
             search: '',
-            go: false,
             displayGenre: '',
             genreFilter: false,
         }
@@ -60,9 +58,7 @@ export default {
         this.currentPage = 1;
         this.loadPage(this.currentPage)
         .then((res)=> {
-            this.loadReactsPage(this.currentPage);
             this.genres();
-            this.go = true;
             this.getWatchedPage(this.currentPage);
 
         }, (err) => {
@@ -70,7 +66,7 @@ export default {
         });
     },
     methods: {
-        ...mapActions('movies', ['getFirstPage', 'loadPage', 'loadReactsPage', 'genres']),
+        ...mapActions('movies', ['getFirstPage', 'loadPage', 'genres']),
         ...mapActions('utils', ['getWatchedPage']),
         trim (text) {
             return this.lodash.truncate(text, {
@@ -78,14 +74,10 @@ export default {
             });
         },
         nextPage(){
-            this.go = false;
             this.currentPage = this.currentPage + 1;
             this.loadPage(this.currentPage)
             .then(()=> {
-                this.loadReactsPage(this.currentPage);
-                this.go = true;
                 this.getWatchedPage(this.currentPage);
-
             })
             .catch((err) => {
                 console.log(err);
@@ -97,11 +89,10 @@ export default {
 
     },
     computed: {
-        ...mapGetters('movies', ['getPage', 'getAll', 'getReacts', 'getGenres', 'getLastPage']),
+        ...mapGetters('movies', ['getPage', 'getAll', 'getGenres', 'getLastPage']),
         ...mapGetters('utils', ['getWatched']),
         filteredMovies: function () {
             
-            if(!this.go) return this.getPage(this.currentPage);
             return this.getPage(this.currentPage).filter((movie) => {
                 if(this.displayGenre == 0 || movie.genre_id == this.displayGenre){
                     return movie.title.toLowerCase().match(this.search.toLowerCase());

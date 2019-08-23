@@ -52,8 +52,7 @@ export default {
         callAddMovie(){
             this.addMovie(this.newMovie)
             .then((res)=>{
-                console.log(res);
-                this.$router.push('/movies');
+                this.$router.push('/movies/'+res['id']);
             })
             .catch((err) => {
                 console.log(err);

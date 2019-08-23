@@ -7,7 +7,6 @@ export default {
         movies: [],
         oneMovie: null,
         genres: [],
-        reacts: [],
         lastPage: 0
     },
     mutations: {
@@ -23,21 +22,7 @@ export default {
         SETGENRES(state, genres){
             state.genres = genres;
         },
-        ADDNEW(state, newMovie) {
-             var last = state.movies[state.movies.length-1][1];
-             if(last.length < 10) {
-                last.push(newMovie);
-             } else {
-                 state.movies.push([state.movies.length, [newMovie]]);
-             }
-        },
-        ADDREACTS(state, newReacts){
-            state.reacts.push(newReacts);
-        },
-        ADDREACTSPAGE(state, newReactsPage){
-            state.reacts = state.reacts.concat(newReactsPage);
-        },
-        SETLASTPAGE(state, page){
+        SETLASTPAGE(state, page) {
             state.lastPage = page;
         }
     },
@@ -73,8 +58,7 @@ export default {
         addMovie({commit}, data) {
             return movieService.post(data)
             .then((res) => {
-                commit('ADDNEW', res['data']);
-                return res;
+                return res['data'];
             })
             .catch((err) => {
                 return err;
@@ -88,24 +72,6 @@ export default {
             .catch((err) => {
                 console.log(err);
             });
-        },
-        loadReacts({commit}, id){
-            movieService.loadReacts(id)
-            .then((res) => {
-                commit('ADDREACTS', res['data']);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-        },
-        loadReactsPage({commit}, page) {
-            return movieService.loadReactsPage(page)
-            .then((res) =>{
-                commit('ADDREACTSPAGE', res['data']);
-            })
-            .catch((err) => {
-                return err;
-            })
         },
         addReaction({}, payload){
             return movieService.addReaction(payload)
@@ -129,9 +95,6 @@ export default {
             return movie;
         },
         getGenres : (state) => state.genres,
-        getReacts: (state) => (id) => {
-            return find(state.reacts, ['movie_id', id])
-        },
         getLastPage: (state) => state.lastPage,
     }
 }

@@ -1,4 +1,5 @@
 import axios from '../axios';
+import constants from '../constants';
 
 const API = 'http://localhost:8000/api/';
 
@@ -21,15 +22,9 @@ export default {
     },
     search(search){
         delete axios.defaults.headers.common["Authorization"];
-        return axios.get('http://www.omdbapi.com/?apikey=' + API_KEY + '&t=' + search);
-    },
-    loadReacts(id){
-        return axios.get(API + 'react/' + id);
+        return axios.get('http://www.omdbapi.com/?apikey=' + constants.OMDB_API_KEY + '&t=' + search);
     },
     addReaction(data) {
         return axios.post(API + 'react', data);
     },
-    loadReactsPage(page) {
-        return axios.get(API + 'reactPage/' + page);
-    }
 }

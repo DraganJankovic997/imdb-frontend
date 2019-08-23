@@ -9,16 +9,11 @@
             <p>Views: {{getOne.views}}</p>
             <p>{{ getOne.description }}</p>
             <img :src="getOne.image_url" alt="Movie cover wallpaper">
-            
-            <div>
-                <p>Likes : {{getOne.emotesCount.Like}}</p>
-            </div>
-            <button @click="react(getOne.id, 1)">Like !</button>
-            <div>
-                <p>Disikes : {{getOne.emotesCount.Dislike}}</p>
-            </div>
-            <button @click="react(getOne.id, 2)">Disike !</button>
 
+            <app-reacts :pbuttons="true"
+                :pemotesCount="getOne.emotesCount"
+                :pid="getOne.id"
+                @passReaction="react($event)" />
 
 
             <app-comments/>
@@ -36,23 +31,22 @@ export default {
 
     created() {
         this.getDetails(this.$route.params.id).then((res)=> {
-            console.log(this.getOne);
+            this.isWatched(this.$route.params.id);
         });
-        this.loadReacts(this.$route.params.id);
-        this.isWatched(this.$route.params.id);
+        
     },
     computed : {
-        ...mapGetters('movies', ['getOne', 'getReacts']),
+        ...mapGetters('movies', ['getOne']),
         ...mapGetters('utils', ['getWatched'])
     },
     methods : {
-        ...mapActions('movies', ['getDetails', 'viewMovie', 'loadReacts', 'addReaction']),
+        ...mapActions('movies', ['getDetails', 'viewMovie', 'addReaction']),
         ...mapActions('utils', ['isWatched', 'setWatched']),
-        react(movie_id, emote_id){
-            this.addReaction({ movie_id, emote_id });
-        },
         callSetWatched(){
             this.setWatched(this.$route.params.id);
+        },
+        react(emote_name){
+            this.addReaction({ movie_id: this.$route.params.id, emote_name: emote_name });
         }
     }
 }
