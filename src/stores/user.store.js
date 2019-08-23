@@ -15,8 +15,8 @@ export default {
         }
     },
     actions: {
-        logout() {
-            return userService.logout();
+        async logout() {
+            await userService.logout();
         },
         login({}, user){
             return userService.login(user)

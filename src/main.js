@@ -36,7 +36,8 @@ const router = new VueRouter({
     { path: '/movies/:id', component: Details },
     { path: '/register', component: Register },
     { path: '/login', component: Login },
-    { path: '/create', component:Create }
+    { path: '/create', component:Create },
+    { path: '/', redirect: '/movies' }
   ]
 });
 

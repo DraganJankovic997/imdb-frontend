@@ -33,9 +33,16 @@ export default {
   },
   methods : {
     ...mapActions('users', ['logout']),
-    callLogout(){
-      this.logout();
-      this.$router.push('/movies');
+    async callLogout(){
+      try{
+        await this.logout()
+        .then(() => {
+          console.log('huehue');
+          this.$router.push('/login');
+        });
+      } catch(ex) {
+        console.log(ex);
+      }
     }
   }
 }

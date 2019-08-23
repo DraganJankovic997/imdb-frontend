@@ -31,7 +31,8 @@ export default {
             return moviesService.loadPage(page)
             .then((res) => {
                 commit('ADDMOVIES', [page, res['data']['data']]);
-                commit('SETLASTPAGE', res['data']['last_page'])
+                commit('SETLASTPAGE', res['data']['last_page']);
+                return res;
             })
             .catch((err) => {
                 return err;
@@ -41,6 +42,7 @@ export default {
             return moviesService.getOne(id)
             .then((res) => {
                 commit('SETONE', res['data']);
+                return res;
             })
             .catch((err) => {
                 console.log(err);
@@ -50,6 +52,7 @@ export default {
             return moviesService.genres()
             .then((res)=>{
                 commit('SETGENRES', res['data']);
+                return res;
             })
             .catch((err) => {
                 return err;
@@ -70,16 +73,16 @@ export default {
                 return res;
             })
             .catch((err) => {
-                console.log(err);
+                return err;
             });
         },
         addReaction({}, payload){
             return movieService.addReaction(payload)
             .then((res)=>{
-                console.log(res);
+                return res;
             })
             .catch((err) => {
-                console.log(err);
+                return err;
             });
         }
 
