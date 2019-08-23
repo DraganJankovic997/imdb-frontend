@@ -13,7 +13,10 @@
       <li>
         <router-link to="/create">Create</router-link>
       </li>
-      <button @click="callLogout()"> Logout </button>
+      <li>
+        <button @click="callLogout()"> Logout </button>
+
+      </li>
     </ul>
 
 
