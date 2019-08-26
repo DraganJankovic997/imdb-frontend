@@ -8,6 +8,7 @@ export default {
         oneMovie: null,
         genres: [],
         reacts: [],
+        lastPage: 0
     },
     mutations: {
         SETMOVIES(state, movies) {
@@ -32,6 +33,12 @@ export default {
         },
         ADDREACTS(state, newReacts){
             state.reacts.push(newReacts);
+        },
+        ADDREACTSPAGE(state, newReactsPage){
+            state.reacts = state.reacts.concat(newReactsPage);
+        },
+        SETLASTPAGE(state, page){
+            state.lastPage = page;
         }
     },
     actions: {
@@ -39,6 +46,7 @@ export default {
             return moviesService.loadPage(page)
             .then((res) => {
                 commit('ADDMOVIES', [page, res['data']['data']]);
+                commit('SETLASTPAGE', res['data']['last_page'])
             })
             .catch((err) => {
                 return err;
@@ -93,6 +101,15 @@ export default {
                 console.log(err);
             })
         },
+        loadReactsPage({commit}, page) {
+            return movieService.loadReactsPage(page)
+            .then((res) =>{
+                commit('ADDREACTSPAGE', res['data']);
+            })
+            .catch((err) => {
+                return err;
+            })
+        },
         addReaction({}, payload){
             return movieService.addReaction(payload)
             .then((res)=>{
@@ -119,6 +136,7 @@ export default {
             return state.reacts.find((r) => {
                 return r['movie_id'] == id;
             })
-        }
+        },
+        getLastPage: (state) => state.lastPage,
     }
 }

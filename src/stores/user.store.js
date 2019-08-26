@@ -16,7 +16,25 @@ export default {
     },
     actions: {
         logout() {
-            userService.logout();
+            return userService.logout();
+        },
+        login({}, user){
+            return userService.login(user)
+            .then((res) => {
+                localStorage.setItem('token', res['data']['access_token']);
+                return res;
+            })
+            .catch((err) => {
+                return err;
+            })
+        },
+        register({}, user){
+            return userService.register(user)
+            .then((res) => {
+                return res;
+            }).catch((err) => {
+                return err;
+            });
         }
     },
     getters: {

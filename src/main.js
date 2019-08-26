@@ -14,6 +14,11 @@ import Movies from './components/Movies';
 import Register from './components/Register';
 import Details from './components/Details';
 import Create from './components/Create';
+import Comments from './components/Comments';
+import Popular from './components/Popular';
+
+Vue.component('app-comments', Comments);
+Vue.component('app-popular', Popular)
 
 
 Vue.use(Vuex);
@@ -21,6 +26,7 @@ Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
 const options = { name: 'lodash' }
 Vue.use(VueLodash, options);
+
 
 const router = new VueRouter({
   mode: 'history',
