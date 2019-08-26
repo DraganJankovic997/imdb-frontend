@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import userService from '../services/user.service';
+import { mapActions } from 'vuex';
 
 export default {
     data: function () {
@@ -20,10 +20,15 @@ export default {
         }
     },
     methods : {
+        ...mapActions('users', ['login']),
         callLogin(){
-            userService.login(this.user).then((res)=> {
+            this.login(this.user)
+            .then((res)=> {
                 this.$router.push('/movies');
             })
+            .catch((err) => {
+                console.log(err.message);
+            });
         },
     }
 }
