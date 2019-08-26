@@ -12,21 +12,10 @@ const ROUTES = {
 export default {
 
     login(data) {
-        return axios.post(API + ROUTES.LOGIN, data)
-        .then((res) => {
-            localStorage.setItem('token', res['data']['access_token']);
-            console.log(res['data']);
-            return res;
-        });
+        return axios.post(API + ROUTES.LOGIN, data);
     },
     register(data) {
-        return axios.post(API + ROUTES.REGISTER, data)
-        .then((res) => {
-            console.log(res);
-            return res;
-        }).catch((err) => {
-            console.log(err);
-        });
+        return axios.post(API + ROUTES.REGISTER, data);
     },
     isLoggedIn() {
         return !!this.getToken();
@@ -34,5 +23,8 @@ export default {
     getToken(){
         return localStorage.getItem('token');
     },
+    logout(){
+        localStorage.removeItem('token');
+    }
     
 };

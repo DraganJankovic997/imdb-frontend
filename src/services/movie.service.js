@@ -1,16 +1,38 @@
 import axios from '../axios';
 
-const API = 'http://localhost:8000/api/movies';
-
+const API = 'http://localhost:8000/api/';
+const API_KEY = '4f14d178';
 
 export default {
     getAll(){
-        return axios.get(API);
+        return axios.get(API + 'movies');
     },
     getOne(id){
-        return axios.get(API + '/' + id);
+        return axios.get(API + 'movies/' + id);
     },
     loadPage(page){
-        return axios.get(API+'?page='+page);
+        return axios.get(API+'movies'+'?page='+page);
+    },
+    post(data) {
+        return axios.post(API + 'movies', data);
+    },
+    genres(){
+        return axios.get(API + 'genres');
+    },
+    search(search){
+        delete axios.defaults.headers.common["Authorization"];
+        return axios.get('http://www.omdbapi.com/?apikey=' + API_KEY + '&t=' + search);
+    },
+    viewMovie(id){
+        return axios.post(API + 'viewmoviepage/' + id);
+    },
+    loadReacts(id){
+        return axios.get(API + 'react/' + id);
+    },
+    addReaction(data) {
+        return axios.post(API + 'react', data);
+    },
+    loadReactsPage(page) {
+        return axios.get(API + 'reactPage/' + page);
     }
 }
