@@ -16,7 +16,8 @@
                 @passReaction="react($event)" />
 
 
-            <app-comments/>
+            <app-comments @AddComment="addMovieComment($event)" @UpdateComments="loadMovieComments($event)"
+                :propLastPage="getLastPage" :propComments="getComments"/>
         </div>
         <div class="col2">
             <h1>Related: </h1>
@@ -37,16 +38,33 @@ export default {
     },
     computed : {
         ...mapGetters('movies', ['getOne']),
-        ...mapGetters('utils', ['getWatched'])
+        ...mapGetters('utils', ['getWatched']),
+        ...mapGetters('comments', ['getComments', 'getLastPage']),
     },
     methods : {
         ...mapActions('movies', ['getDetails', 'addReaction']),
         ...mapActions('utils', ['setWatched']),
+        ...mapActions('comments', ['loadComments', 'postComment']),
+
         callSetWatched(){
             this.setWatched(this.$route.params.id);
         },
         react(emote_name){
             this.addReaction({ movie_id: this.$route.params.id, emote_name: emote_name });
+        },
+        addMovieComment(newComment) {
+            this.postComment({ movie_id: this.$route.params.id, content: newComment})
+            .then((res) => {
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        },
+        loadMovieComments(commentsPage){
+            this.loadComments({movie_id: this.$route.params.id, page: commentsPage})
+            .catch((err) => {
+                console.log(err);
+            });
         }
     }
 }
