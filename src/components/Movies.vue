@@ -14,7 +14,7 @@
             <div v-for="m in filteredMovies" :key="m.id">
 
                 <router-link :to="`/movies/${m.id}`" ><h1>{{ m.title }}</h1></router-link>
-                <div v-if="getWatched(m.id) != null">Watched: {{ getWatched(m.id)['watched'] }}</div>
+                <div>Watched: {{ m.watched }}</div>
                 <h4>{{ m.genre.name }}</h4>
                 <p> Views: {{m.views}} </p>
                 <p>{{ trim(m.description) }} </p>
@@ -59,7 +59,7 @@ export default {
         this.loadPage(this.currentPage)
         .then((res)=> {
             this.genres();
-            this.getWatchedPage(this.currentPage);
+            // this.getWatchedPage(this.currentPage);
 
         }, (err) => {
             console.log(err.message);

@@ -23,38 +23,14 @@ export default {
         }
     },
     actions: {
-        isWatched({commit}, id) {
-            return utilsService.getWatched(id)
-            .then((res) => {
-                if(res['data'] == 'Watched') {
-                    commit('ADDWATCHED', { 'movie_id': id, 'watched': true });
-                } else {
-                    commit('ADDWATCHED', { 'movie_id': id, 'watched': false })
-                }
-                return res;
-            })
-            .catch((err) => {
-                return err;
-            })
-        },
         setWatched({commit}, id){
             return utilsService.setWatched(id)
             .then((res) => {
-                commit('SETWATCHED', id);
+                commit('movies/SETWATCHED', id, {root: true});
                 return res;
             })
             .catch((err) => {
                 console.log(err);
-            });
-        },
-        getWatchedPage({commit}, page) {
-            return utilsService.getWatchedPage(page)
-            .then((res) => {
-                commit('ADDWATCHED', res['data']);
-                return res;
-            })
-            .catch((err) => {
-                return err;
             });
         },
         loadPopular({commit}){
@@ -77,11 +53,6 @@ export default {
         }
     },
     getters: {
-        getWatched: (state) => (id) => {
-            return state.watched.find((w) => {
-                return w['movie_id'] == id;
-            })
-        },
         getListOfTen: (state) => state.listOfTen,
     }
 }

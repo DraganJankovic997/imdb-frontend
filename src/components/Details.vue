@@ -2,7 +2,7 @@
     <div v-if="getOne != null" >
         <div class="col1">
             <h1> Details: </h1>  
-            <div v-if="getWatched(getOne.id) != null">Watched: {{ getWatched(getOne.id)['watched'] }}</div>
+            <div>Watched: {{ getOne.watched }}</div>
             <button @click="callSetWatched">Watch/unwatch me !</button>
             <h1> Title: {{ getOne.title }}</h1>
             <h3> Genre: {{ getOne.genre.name }}</h3>
@@ -30,8 +30,8 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
 
     created() {
-        this.getDetails(this.$route.params.id).then((res)=> {
-            this.isWatched(this.$route.params.id);
+        this.getDetails(this.$route.params.id).then(()=> {
+            console.log(this.getOne);
         });
         
     },
@@ -40,8 +40,8 @@ export default {
         ...mapGetters('utils', ['getWatched'])
     },
     methods : {
-        ...mapActions('movies', ['getDetails', 'viewMovie', 'addReaction']),
-        ...mapActions('utils', ['isWatched', 'setWatched']),
+        ...mapActions('movies', ['getDetails', 'addReaction']),
+        ...mapActions('utils', ['setWatched']),
         callSetWatched(){
             this.setWatched(this.$route.params.id);
         },

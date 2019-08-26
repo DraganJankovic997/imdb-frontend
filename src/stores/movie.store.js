@@ -24,6 +24,9 @@ export default {
         },
         SETLASTPAGE(state, page) {
             state.lastPage = page;
+        },
+        SETWATCHED(state, id) {
+            state.oneMovie['watched'] = !state.oneMovie['watched'];
         }
     },
     actions: {
