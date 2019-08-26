@@ -42,7 +42,7 @@ export default {
             this.loadComments({movie_id: this.$route.params.id, page: this.currentPage});
         },
         addComment(){
-            this.postComment({'movie_id': this.$route.params.id , 'content': this.newComment })
+            this.postComment({ movie_id: this.$route.params.id , content : this.newComment })
             .then((res) => {
 
             })
