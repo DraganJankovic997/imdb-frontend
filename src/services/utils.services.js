@@ -13,10 +13,10 @@ export default {
         return axios.get(constants.API + 'watchedPage/' + page);
     },
     getPopular() {
-        return axios.get(constants.API + 'popular');
+        return axios.get(constants.API + 'popular/movies');
     },
     getRelated(genre_id) {
-        return axios.get(constants.API+'related/' + genre_id);
+        return axios.get(constants.API+'related/movies/' + genre_id);
     }
     
 };

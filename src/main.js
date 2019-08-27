@@ -47,10 +47,11 @@ router.beforeEach((to, from, next) => {
       next({ path : '/movies' });
       return;
     }
-  }
-  if(!userService.isLoggedIn()) {
-    next({ path : '/login' });
-    return;
+  } else {
+    if(!userService.isLoggedIn()) {
+      next({ path : '/login' });
+      return;
+    }
   }
 
   next();

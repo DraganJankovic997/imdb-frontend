@@ -31,10 +31,7 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
 
     created() {
-        this.getDetails(this.$route.params.id).then(()=> {
-            console.log(this.getOne);
-        });
-        
+        this.getDetails(this.$route.params.id).then();
     },
     computed : {
         ...mapGetters('movies', ['getOne']),
