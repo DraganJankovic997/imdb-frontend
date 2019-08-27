@@ -91,14 +91,13 @@ export default {
     computed: {
         ...mapGetters('movies', ['getPage', 'getAll', 'getGenres', 'getLastPage']),
         ...mapGetters('utils', ['getWatched']),
-        filteredMovies: function () {
+        filteredMovies() {
             
             return this.getPage(this.currentPage).filter((movie) => {
                 if(this.displayGenre == 0 || movie.genre_id == this.displayGenre){
                     return movie.title.toLowerCase().match(this.search.toLowerCase());
-                } else {
-                    return false;
                 }
+                return false;
             });                
             
             

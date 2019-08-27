@@ -15,9 +15,7 @@ export default {
         if(this.genre == 0) {
             this.loadPopular();
         }
-        else {
-            this.loadRelated(this.genre);
-        }
+        this.loadRelated(this.genre);
     },
     methods: {
         ...mapActions('utils', ['loadPopular', 'loadRelated']),
