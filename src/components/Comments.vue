@@ -38,7 +38,7 @@ export default {
             this.loadComments();
         },
         addComment(){
-            this.$emit('AddComment', this.newComment);
+            this.$emit('AddComment', this.newComment)
         },
         loadComments(){
             this.$emit('UpdateComments', this.currentPage);

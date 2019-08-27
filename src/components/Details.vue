@@ -1,24 +1,22 @@
 <template>
     <div v-if="getOne != null" >
+        <h1> Details: </h1>  
         <div class="col1">
-            <h1> Details: </h1>  
-            <div>Watched: {{ getOne.watched }}</div>
-            <button @click="callSetWatched">Watch/unwatch me !</button>
-            <h1> Title: {{ getOne.title }}</h1>
-            <h3> Genre: {{ getOne.genre.name }}</h3>
-            <p>Views: {{getOne.views}}</p>
-            <p>{{ getOne.description }}</p>
-            <img :src="getOne.image_url" alt="Movie cover wallpaper">
+            <app-movie :movie="getOne" @watched="callSetWatched" :details="true"/>
 
             <app-reacts :pbuttons="true"
-                :pemotesCount="getOne.emotesCount"
+                :pemotesCount="getOne.emotes"
                 :pid="getOne.id"
                 @passReaction="react($event)" />
 
-
             <app-comments @AddComment="addMovieComment($event)" @UpdateComments="loadMovieComments($event)"
                 :propLastPage="getLastPage" :propComments="getComments"/>
+
+
+
+
         </div>
+
         <div class="col2">
             <h1>Related: </h1>
             <app-popular :genre="getOne.genre_id" />
@@ -31,7 +29,7 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
 
     created() {
-        this.getDetails(this.$route.params.id).then();
+        this.getDetails(this.$route.params.id);
     },
     computed : {
         ...mapGetters('movies', ['getOne']),
@@ -41,7 +39,7 @@ export default {
     methods : {
         ...mapActions('movies', ['getDetails', 'addReaction']),
         ...mapActions('utils', ['setWatched']),
-        ...mapActions('comments', ['loadComments', 'postComment']),
+        ...mapActions('comments', ['loadComments', 'postComment', 'loadAllComments']),
 
         callSetWatched(){
             this.setWatched(this.$route.params.id);
@@ -62,6 +60,9 @@ export default {
             .catch((err) => {
                 console.log(err);
             });
+        },
+        loadAllComments() {
+            this.loadAllComments(movie_id);
         }
     }
 }
