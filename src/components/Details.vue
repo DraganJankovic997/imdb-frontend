@@ -60,9 +60,6 @@ export default {
                 console.log(err);
             });
         },
-        loadAllComments() {
-            this.loadAllComments(movie_id);
-        }
     }
 }
 </script>
