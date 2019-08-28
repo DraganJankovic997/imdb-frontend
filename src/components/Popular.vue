@@ -10,7 +10,9 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 export default {
-    props: ['genre'],
+    props: {
+        genre: Number
+    },
     created(){
         if(this.genre == 0) {
             this.loadPopular();

@@ -29,7 +29,12 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 export default {
-    props: ['propLastPage', 'propComments', 'propIsSubcomment', 'propId'],
+    props: {
+        propLastPage: Number,
+        propComments: Array,
+        propIsSubcomment: Boolean,
+        propId: Number
+    },
     data () {
         return {
             currentPage: 0,

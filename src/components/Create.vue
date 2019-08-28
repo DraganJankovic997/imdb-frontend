@@ -34,8 +34,6 @@ export default {
                 description: '',
                 genre_id: '',
                 image_url: '',
-                // created_at: '',
-                // updated_at: ''
             },
             omdbSearch: ''
         }

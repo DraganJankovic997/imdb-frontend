@@ -12,7 +12,11 @@
 <script>
 import { mapActions } from 'vuex';
 export default {
-    props: ['pemotesCount', 'pbuttons', 'pid'],
+    props: {
+        pemotesCount: Object,
+        pbuttons: Boolean,
+        pid: Number
+    },
     methods: {
         react(emote_name){
             this.$emit('passReaction', emote_name);

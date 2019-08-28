@@ -3,24 +3,15 @@
         <h1> Details: </h1>  
         <div class="col1">
             <app-movie :movie="getOne" @watched="callSetWatched" :details="true"/>
-
             <app-reacts :pbuttons="true"
                 :pemotesCount="getOne.emotes"
                 :pid="getOne.id"
                 @passReaction="react($event)" />
-
             <h1>Comments : </h1>
-
-
             <app-comments @AddComment="addMovieComment($event)" @UpdateComments="loadMovieComments($event)"
                 :propLastPage="getLastPage" :propComments="getComments"
                 :propIsSubcomment="false" :propId="getOne.id"/>
-
-
-
-
         </div>
-
         <div class="col2">
             <h1>Related: </h1>
             <app-popular :genre="getOne.genre_id" />
@@ -35,10 +26,7 @@ export default {
     created() {
         this.getDetails(this.$route.params.id)
         .then((res) => {
-            this.loadComments({'movie_id': this.$route.params.id, 'page': 1})
-            .then((res) => {
-                console.log(this.getComments);
-            });
+            this.loadComments({'movie_id': this.$route.params.id, 'page': 1});
         });
     },
     computed : {

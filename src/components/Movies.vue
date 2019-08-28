@@ -80,9 +80,6 @@ export default {
         nextPage(){
             this.currentPage = this.currentPage + 1;
             this.loadPage(this.currentPage)
-            .then(()=> {
-                this.getWatchedPage(this.currentPage);
-            })
             .catch((err) => {
                 console.log(err);
             });

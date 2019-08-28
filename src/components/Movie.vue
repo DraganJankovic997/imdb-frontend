@@ -19,7 +19,10 @@
 
 <script>
 export default {
-    props: ['movie', 'details'],
+    props: {
+        movie: Object,
+        details: Boolean,
+    },
     methods: {
         watched() {
             this.$emit('watched');
