@@ -34,8 +34,8 @@ export default {
                 return err;
             });
         },
-        postComment({commit, dispatch}, payload){
-            return commentsService.postNew(payload['movie_id'], payload['content'])
+        postComment({commit}, payload){
+            return commentsService.postNew(payload['isSubcomment'], payload['id'], payload['content'])
             .then((res) => {
                 commit('SETALL', res['data']);
                 return res;

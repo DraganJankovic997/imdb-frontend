@@ -1,15 +1,16 @@
 <template>
-    <div>
+    <div v-if="propComments != null">
         <div v-for="c in propComments" v-bind:key="c.id">
-            <h4>Author: {{ c.user.name }}</h4>
+            <h4 v-if="c.user != null">Author: {{ c.user.name }}</h4>
             <p> {{ c.content }} </p>
-            <div v-if="propIsSubcomment && c.subcomments.length>0">
-                Subcomments: 
-                <app-comments @AddComment="addMovieComment($event)" @UpdateComments="loadMovieComments($event)"
-                :propComments="c.subcomments" :propIsSubcomment="false"/>
+            <div v-if="!propIsSubcomment && c.subcomments != null">
+                <u> Subcomments: </u> 
+                <app-comments @AddSubcomment="addComment($event)" @UpdateComments="loadMovieComments($event)"
+                :propComments="c.subcomments" :propIsSubcomment="true"
+                :propId="c.id"/>
             </div>
             
-            <div v-if="propIsSubcomment" >
+            <div v-if="!propIsSubcomment" >
                 ____________________________________________________
             </div>
 
@@ -18,7 +19,9 @@
 
         <button v-if="currentPage < propLastPage" @click="showMore">Show more !</button>
 
-        <app-comment-input @addCommentEvent="addComment($event)" />
+        <p>New comment: <textarea v-model="newComment"
+            rows="4" cols="50"></textarea></p>
+        <button @click="buttonClick">Post new comment !</button>
 
     </div>
 </template>
@@ -26,10 +29,11 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 export default {
-    props: ['propLastPage', 'propComments', 'propIsSubcomment'],
+    props: ['propLastPage', 'propComments', 'propIsSubcomment', 'propId'],
     data () {
         return {
             currentPage: 0,
+            newComment: ''
         }
     },
     created() {
@@ -41,10 +45,25 @@ export default {
             this.currentPage = this.currentPage + 1;
             this.loadComments();
         },
-        addComment($newComment){
+        buttonClick(){
+            var data = {
+                content: this.newComment,
+                isSubcomment: this.propIsSubcomment,
+                id: this.propId
+            };
+            if(this.propIsSubcomment){
+                this.addSubcomment(data);
+            } else {
+                this.addComment(data);
+            }
+        },
+        addComment(data) {
             this.currentPage = this.propLastPage;
-            let type = this.propIsSubcomment ? 'comment' : 'movie';
-            this.$emit('AddComment', {content: this.newComment, type: type});
+            this.$emit('AddComment', data);
+        },
+        addSubcomment(data) {
+            this.currentPage = this.propLastPage;
+            this.$emit('AddSubcomment', data);
         },
         loadComments(){
             this.$emit('UpdateComments', this.currentPage);

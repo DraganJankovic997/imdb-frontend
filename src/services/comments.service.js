@@ -8,9 +8,10 @@ export default {
         return axios.get(constants.API + 'comments/movies/' + movie_id + '?page=' + page);
     },
     postNew(type, id, content){
-        if(type = 'movie') {
-            return axios.post(constants.API + 'comments/movies/' + id, { content: content });
+        if(type) {
+            return axios.post(constants.API + 'comments/' + id, { content: content })
         }
-        return axios.post(constants.API + 'comments/' + id, { content: content })
+        return axios.post(constants.API + 'comments/movies/' + id, { content: content });
+
     }
 }

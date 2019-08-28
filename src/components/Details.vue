@@ -14,7 +14,7 @@
 
             <app-comments @AddComment="addMovieComment($event)" @UpdateComments="loadMovieComments($event)"
                 :propLastPage="getLastPage" :propComments="getComments"
-                :propIsSubcomment="true"/>
+                :propIsSubcomment="false" :propId="getOne.id"/>
 
 
 
@@ -43,7 +43,6 @@ export default {
     },
     computed : {
         ...mapGetters('movies', ['getOne']),
-        ...mapGetters('utils', ['getWatched']),
         ...mapGetters('comments', ['getComments', 'getLastPage']),
     },
     methods : {
@@ -57,9 +56,11 @@ export default {
         react(emote_name){
             this.addReaction({ movie_id: this.$route.params.id, emote_name: emote_name });
         },
-        addMovieComment(newComment) {
-            this.postComment({ movie_id: this.$route.params.id, content: newComment})
+        addMovieComment(data) {
+            console.log(data);
+            this.postComment(data)
             .then((res) => {
+                console.log(res);
             })
             .catch((err) => {
                 console.log(err);
