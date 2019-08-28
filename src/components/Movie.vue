@@ -38,7 +38,7 @@ export default {
 }
 </script>
 
-<style>
+<style stored>
     .small {
         display: inline;
         width: 50px;
