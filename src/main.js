@@ -18,10 +18,12 @@ import Comments from './components/Comments';
 import Popular from './components/Popular';
 import Reacts from './components/Reacts';
 import Movie from './components/Movie';
+import CommentInput from './components/CommentInput';
 Vue.component('app-comments', Comments);
 Vue.component('app-popular', Popular);
 Vue.component('app-reacts', Reacts);
 Vue.component('app-movie', Movie);
+Vue.component('app-comment-input', CommentInput);
 
 
 Vue.use(Vuex);

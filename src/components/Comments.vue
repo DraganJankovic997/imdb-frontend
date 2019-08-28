@@ -1,18 +1,24 @@
 <template>
     <div>
-        <h1>Comments : </h1>
-
         <div v-for="c in propComments" v-bind:key="c.id">
             <h4>Author: {{ c.user.name }}</h4>
             <p> {{ c.content }} </p>
+            <div v-if="propIsSubcomment && c.subcomments.length>0">
+                Subcomments: 
+                <app-comments @AddComment="addMovieComment($event)" @UpdateComments="loadMovieComments($event)"
+                :propComments="c.subcomments" :propIsSubcomment="false"/>
+            </div>
+            
+            <div v-if="propIsSubcomment" >
+                ____________________________________________________
+            </div>
+
 
         </div>
 
         <button v-if="currentPage < propLastPage" @click="showMore">Show more !</button>
 
-        <p>New comment: <textarea v-model="newComment"
-                rows="4" cols="50"></textarea></p>
-        <button @click="addComment">Post new comment !</button>
+        <app-comment-input @addCommentEvent="addComment($event)" />
 
     </div>
 </template>
@@ -20,16 +26,14 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 export default {
-    props: ['propLastPage', 'propComments'],
+    props: ['propLastPage', 'propComments', 'propIsSubcomment'],
     data () {
         return {
-            newComment: '',
             currentPage: 0,
         }
     },
     created() {
         this.currentPage = 1;
-        this.loadComments({'movie_id': this.$route.params.id, 'page': this.currentPage});
     },
 
     methods : {
@@ -37,9 +41,10 @@ export default {
             this.currentPage = this.currentPage + 1;
             this.loadComments();
         },
-        addComment(){
+        addComment($newComment){
             this.currentPage = this.propLastPage;
-            this.$emit('AddComment', this.newComment)
+            let type = this.propIsSubcomment ? 'comment' : 'movie';
+            this.$emit('AddComment', {content: this.newComment, type: type});
         },
         loadComments(){
             this.$emit('UpdateComments', this.currentPage);

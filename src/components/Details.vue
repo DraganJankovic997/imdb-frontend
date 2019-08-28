@@ -9,8 +9,12 @@
                 :pid="getOne.id"
                 @passReaction="react($event)" />
 
+            <h1>Comments : </h1>
+
+
             <app-comments @AddComment="addMovieComment($event)" @UpdateComments="loadMovieComments($event)"
-                :propLastPage="getLastPage" :propComments="getComments"/>
+                :propLastPage="getLastPage" :propComments="getComments"
+                :propIsSubcomment="true"/>
 
 
 
@@ -29,7 +33,13 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
 
     created() {
-        this.getDetails(this.$route.params.id);
+        this.getDetails(this.$route.params.id)
+        .then((res) => {
+            this.loadComments({'movie_id': this.$route.params.id, 'page': 1})
+            .then((res) => {
+                console.log(this.getComments);
+            });
+        });
     },
     computed : {
         ...mapGetters('movies', ['getOne']),
@@ -39,7 +49,7 @@ export default {
     methods : {
         ...mapActions('movies', ['getDetails', 'addReaction']),
         ...mapActions('utils', ['setWatched']),
-        ...mapActions('comments', ['loadComments', 'postComment', 'loadAllComments']),
+        ...mapActions('comments', ['loadComments', 'postComment']),
 
         callSetWatched(){
             this.setWatched(this.$route.params.id);
