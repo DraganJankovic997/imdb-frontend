@@ -38,6 +38,7 @@ export default {
             this.loadComments();
         },
         addComment(){
+            this.currentPage = this.propLastPage;
             this.$emit('AddComment', this.newComment)
         },
         loadComments(){

@@ -37,11 +37,8 @@ export default {
         postComment({commit, dispatch}, payload){
             return commentsService.postNew(payload['movie_id'], payload['content'])
             .then((res) => {
-                dispatch('loadComments', { movie_id: payload['movie_id']})
-                .then((res) => {
-                    commit('ADDCOMMENTS', res['data']);
-                    return res;
-                });
+                commit('SETALL', res['data']);
+                return res;
             })
             .catch((err) => {
                 return err;
