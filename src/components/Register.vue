@@ -28,7 +28,8 @@ export default {
         ...mapActions('users', ['register']),
         callRegister() {
             this.register(this.user)
-            .then (() => {
+            .then ((res) => {
+            console.log(res);
             this.$router.push('/login');
             });
         },

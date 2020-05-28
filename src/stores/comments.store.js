@@ -15,6 +15,9 @@ export default {
         },
         SETLASTPAGE(state, page){
             state.lastPage = page;
+        },
+        SETALL(state, comments) {
+            state.comments = comments;
         }
     },
     actions: {
@@ -32,9 +35,9 @@ export default {
             });
         },
         postComment({commit}, payload){
-            return commentsService.postNew(payload['movie_id'], payload['content'])
+            return commentsService.postNew(payload['isSubcomment'], payload['id'], payload['content'])
             .then((res) => {
-                commit('ADDCOMMENTS', [res['data']]);
+                commit('SETALL', res['data']);
                 return res;
             })
             .catch((err) => {

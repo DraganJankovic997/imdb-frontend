@@ -1,23 +1,16 @@
 <template>
     <div v-if="getOne != null" >
+        <h1> Details: </h1>  
         <div class="col1">
-            <h1> Details: </h1>  
-            <div>Watched: {{ getOne.watched }}</div>
-            <button @click="callSetWatched">Watch/unwatch me !</button>
-            <h1> Title: {{ getOne.title }}</h1>
-            <h3> Genre: {{ getOne.genre.name }}</h3>
-            <p>Views: {{getOne.views}}</p>
-            <p>{{ getOne.description }}</p>
-            <img :src="getOne.image_url" alt="Movie cover wallpaper">
-
+            <app-movie :movie="getOne" @watched="callSetWatched" :details="true"/>
             <app-reacts :pbuttons="true"
-                :pemotesCount="getOne.emotesCount"
+                :pemotesCount="getOne.emotes"
                 :pid="getOne.id"
                 @passReaction="react($event)" />
-
-
+            <h1>Comments : </h1>
             <app-comments @AddComment="addMovieComment($event)" @UpdateComments="loadMovieComments($event)"
-                :propLastPage="getLastPage" :propComments="getComments"/>
+                :propLastPage="getLastPage" :propComments="getComments"
+                :propIsSubcomment="false" :propId="getOne.id"/>
         </div>
         <div class="col2">
             <h1>Related: </h1>
@@ -31,14 +24,13 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
 
     created() {
-        this.getDetails(this.$route.params.id).then(()=> {
-            console.log(this.getOne);
+        this.getDetails(this.$route.params.id)
+        .then((res) => {
+            this.loadComments({'movie_id': this.$route.params.id, 'page': 1});
         });
-        
     },
     computed : {
         ...mapGetters('movies', ['getOne']),
-        ...mapGetters('utils', ['getWatched']),
         ...mapGetters('comments', ['getComments', 'getLastPage']),
     },
     methods : {
@@ -52,9 +44,11 @@ export default {
         react(emote_name){
             this.addReaction({ movie_id: this.$route.params.id, emote_name: emote_name });
         },
-        addMovieComment(newComment) {
-            this.postComment({ movie_id: this.$route.params.id, content: newComment})
+        addMovieComment(data) {
+            console.log(data);
+            this.postComment(data)
             .then((res) => {
+                console.log(res);
             })
             .catch((err) => {
                 console.log(err);
@@ -65,7 +59,7 @@ export default {
             .catch((err) => {
                 console.log(err);
             });
-        }
+        },
     }
 }
 </script>

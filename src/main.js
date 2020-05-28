@@ -17,9 +17,11 @@ import Create from './components/Create';
 import Comments from './components/Comments';
 import Popular from './components/Popular';
 import Reacts from './components/Reacts';
+import Movie from './components/Movie';
 Vue.component('app-comments', Comments);
 Vue.component('app-popular', Popular);
 Vue.component('app-reacts', Reacts);
+Vue.component('app-movie', Movie);
 
 
 Vue.use(Vuex);
@@ -53,6 +55,7 @@ router.beforeEach((to, from, next) => {
       return;
     }
   }
+
   next();
 });
 
